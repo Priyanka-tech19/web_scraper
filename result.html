@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Include jQuery here -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'myapp/style.css' %}">
+  
+    <title>Document</title>
+</head>
+<body>
+ 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 m-5">
+                <h1>Web Scraper </h1>
+            </div>
+        </div>
+        <div class="row md-5">
+            <div class="col-md-5">
+                <form method="POST" action="/">
+                    {% csrf_token %}
+                    <input class="form-control" name="site" type="text" id="site" placeholder="Enter your site address" required>
+                    <!--<div style="margin-bottom:20px; margin-top:20px;">  </div> -->
+                </div>
+                <div class="col-md-1" style="margin-left: 10px;" >
+                    <button class="btn btn-primary" type="submit">Scrape</button>
+                </div>
+                </form>
+                <div class="col-md-1" style="margin-left: 1px;">
+                    <a class="btn btn-warning" href="{% url 'clear'%}">Delete</a>
+                </div>
+            </div>
+
+            <!-- Display error message if no site address is provided -->
+            {% if error_message %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error_message }}
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        {% if data %}
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Link</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for link in data %}
+                                    <tr>
+                                        <td>{{link.id}}</td>
+                                        <td>{{link.name}}</td>
+                                        <!--<td>{{link.address}}</td>-->
+                                        <td>
+                                            <a href="{{ link.address }}" target="_blank">{{ link.address }}</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                      
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
