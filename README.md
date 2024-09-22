@@ -1,0 +1,1 @@
+A Python-based web scraping tool that automates the extraction of data from websites. This project uses BeautifulSoup and requests libraries to gather and process data, which can be customized to target specific sites and elements. 
